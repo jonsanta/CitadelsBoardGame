@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<deck>
+  <card id="1" number="5">
+    <name>Señorio</name>
+    <price>3</price>
+    <colour>Amarillo</colour>
+  </card>
+  <card id="2" number="5">
+    <name>Castillo</name>
+    <price>4</price>
+    <colour>Amarillo</colour>
+  </card>
+  <card id="3" number="2">
+    <name>Palacio</name>
+    <price>5</price>
+    <colour>Amarillo</colour>
+  </card>
+  <card id="4" number="3">
+    <name>Templo</name>
+    <price>1</price>
+    <colour>Azul</colour>
+  </card>
+  <card id="5" number="3">
+    <name>Iglesia</name>
+    <price>2</price>
+    <colour>Azul</colour>
+  </card>
+  <card id="6" number="4">
+    <name>Monasterio</name>
+    <price>3</price>
+    <colour>Azul</colour>
+  </card>
+  <card id="7" number="2">
+    <name>Catedral</name>
+    <price>5</price>
+    <colour>Azul</colour>
+  </card>
+  <card id="8" number="5">
+    <name>Taberna</name>
+    <price>1</price>
+    <colour>Verde</colour>
+  </card>
+  <card id="9" number="4">
+    <name>Tienda</name>
+    <price>2</price>
+    <colour>Verde</colour>
+  </card>
+  <card id="10" number="4">
+    <name>Mercado</name>
+    <price>2</price>
+    <colour>Verde</colour>
+  </card>
+  <card id="11" number="3">
+    <name>Almacenes</name>
+    <price>3</price>
+    <colour>Verde</colour>
+  </card>
+  <card id="12" number="3">
+    <name>Puerto</name>
+    <price>4</price>
+    <colour>Verde</colour>
+  </card>
+  <card id="13" number="2">
+    <name>Ayuntamiento</name>
+    <price>5</price>
+    <colour>Verde</colour>
+  </card>
+  <card id="14" number="3">
+    <name>Atalaya</name>
+    <price>1</price>
+    <colour>Rojo</colour>
+  </card>
+  <card id="15" number="3">
+    <name>Prision</name>
+    <price>2</price>
+    <colour>Rojo</colour>
+  </card>
+  <card id="16" number="3">
+    <name>Cuartel</name>
+    <price>3</price>
+    <colour>Rojo</colour>
+  </card>
+  <card id="17" number="3">
+    <name>Fortaleza</name>
+    <price>5</price>
+    <colour>Rojo</colour>
+  </card>
+  <card id="18" number="1">
+    <name>Tesoro imperial</name>
+    <price>4</price>
+    <colour>Purpura</colour>
+  </card>
+  <card id="19" number="1">
+    <name>Torreon</name>
+    <price>3</price>
+    <colour>Purpura</colour>
+  </card>
+  <card id="20" number="1">
+    <name>Faro</name>
+    <price>3</price>
+    <colour>Purpura</colour>
+  </card>
+  <card id="21" number="1">
+    <name>Polvorin</name>
+    <price>3</price>
+    <colour>Purpura</colour>
+  </card>
+  <card id="22" number="1">
+    <name>Museo</name>
+    <price>4</price>
+    <colour>Purpura</colour>
+  </card>
+  <card id="23" number="1">
+    <name>Hospicio</name>
+    <price>4</price>
+    <colour>Purpura</colour>
+  </card>
+  <card id="24" number="1">
+    <name>Campanario</name>
+    <price>5</price>
+    <colour>Purpura</colour>
+  </card>
+  <card id="25" number="1">
+    <name>Cantera</name>
+    <price>5</price>
+    <colour>Purpura</colour>
+  </card>
+  <card id="26" number="1">
+    <name>Sala de Mapas</name>
+    <price>5</price>
+    <colour>Purpura</colour>
+  </card>
+  <card id="27" number="1">
+    <name>Fuente de los Deseos</name>
+    <price>5</price>
+    <colour>Purpura</colour>
+  </card>
+  <card id="28" number="1">
+    <name>Observatorio</name>
+    <price>5</price>
+    <colour>Purpura</colour>
+  </card>
+  <card id="29" number="1">
+    <name>Laboratorio</name>
+    <price>5</price>
+    <colour>Purpura</colour>
+  </card>
+  <card id="30" number="1">
+    <name>Fabrica</name>
+    <price>5</price>
+    <colour>Purpura</colour>
+  </card>
+  <card id="31" number="1">
+    <name>Cementerio</name>
+    <price>5</price>
+    <colour>Purpura</colour>
+  </card>
+  <card id="32" number="1">
+    <name>Biblioteca</name>
+    <price>6</price>
+    <colour>Purpura</colour>
+  </card>
+  <card id="33" number="1">
+    <name>Escuela de magia</name>
+    <price>6</price>
+    <colour>Purpura</colour>
+  </card>
+  <card id="34" number="1">
+    <name>Parque</name>
+    <price>6</price>
+    <colour>Purpura</colour>
+  </card>
+  <card id="35" number="1">
+    <name>Hospital</name>
+    <price>6</price>
+    <colour>Purpura</colour>
+  </card>
+  <card id="36" number="1">
+    <name>Gran Muralla</name>
+    <price>6</price>
+    <colour>Purpura</colour>
+  </card>
+  <card id="37" number="1">
+    <name>Sala del Trono</name>
+    <price>6</price>
+    <colour>Purpura</colour>
+  </card>
+  <card id="38" number="1">
+    <name>Puerta del Dragon</name>
+    <price>8</price>
+    <colour>Purpura</colour>
+  </card>
+  <card id="39" number="1">
+    <name>Universidad</name>
+    <price>8</price>
+    <colour>Purpura</colour>
+  </card>
+  <card id="40" number="1">
+    <name>Ciudad Embrujada</name>
+    <price>2</price>
+    <colour>Purpura</colour>
+  </card>
+  <card id="41" number="1">
+    <name>Herreria</name>
+    <price>5</price>
+    <colour>Purpura</colour>
+  </card>
+</deck>
