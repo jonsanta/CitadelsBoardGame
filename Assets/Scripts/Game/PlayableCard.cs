@@ -59,6 +59,9 @@ public class PlayableCard : Card, IBeginDragHandler, IDragHandler, IEndDragHandl
     void IEndDragHandler.OnEndDrag(PointerEventData eventData)
     {
         transform.SetParent(hand);
-        transform.SetSiblingIndex(playerInstance.GetCardIndex(this.gameObject));
+        if (Input.mousePosition.y > Screen.height * 0.45)
+            playerInstance.PlayCard(gameObject);
+        else
+            transform.SetSiblingIndex(playerInstance.GetCardIndex(this.gameObject));
     }
 }

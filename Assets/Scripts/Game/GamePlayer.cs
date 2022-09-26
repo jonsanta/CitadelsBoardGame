@@ -16,6 +16,14 @@ public class GamePlayer
     public void RemoveCard(GameObject card)
     {
         cards.Remove(card);
+        MonoBehaviour.Destroy(card);
+    }
+
+    public void PlayCard(GameObject card)
+    {
+        //PLAY CARD
+        cards.Remove(card);
+        MonoBehaviour.Destroy(card);
     }
 
     public int GetCardIndex(GameObject card)
