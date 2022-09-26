@@ -5,9 +5,18 @@ using UnityEngine;
 using UnityEngine.UI;
 
 //Represents Thief character skill
-public class Ladron : MonoBehaviour
+public class Ladron : Character
 {
+    //Photon Message constants
     private const byte STEAL = 8;
+
+    //has passive skill?
+    private const bool passive = true;
+
+    override public bool isPassive()
+    {
+        return passive;
+    }
 
     /// <summary>
     /// Load Skill
@@ -15,7 +24,8 @@ public class Ladron : MonoBehaviour
     /// <param name="optionSelector">Content RectTransform where prefabs will be instantiated</param>
     /// <param name="characterSelectPrefab">Character card prefab</param>
     /// <param name="sprites">Character Sprites</param>
-    public void setSkill(RectTransform optionSelector, GameObject selectionPanel, GameObject characterSelectPrefab, Sprite[] sprites)
+    /// 
+    override public void setSkill(RectTransform optionSelector, GameObject selectionPanel, GameObject characterSelectPrefab, Sprite[] sprites)
     {
         selectionPanel.SetActive(true);
         optionSelector.parent.parent.gameObject.GetComponentInChildren<Text>().text = "Selecciona el personaje al que quieres robar";

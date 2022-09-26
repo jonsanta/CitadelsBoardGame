@@ -1,18 +1,31 @@
+using ExitGames.Client.Photon;
+using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Arquitecto : MonoBehaviour
+public class Arquitecto : Character
 {
-    // Start is called before the first frame update
-    void Start()
+    //Photon Message constants
+    private const byte ASK_CARDS = 6;
+
+    //has passive skill?
+    private const bool passive = true;
+
+    override public bool isPassive()
     {
-        
+        return passive;
     }
 
-    // Update is called once per frame
-    void Update()
+    override public void setSkill(RectTransform optionSelector, GameObject selectionPanel, GameObject characterSelectPrefab, Sprite[] sprites)
     {
-        
+        GetComponent<GameLogic>().byPassCardSelection();
+
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient };
+        PhotonNetwork.RaiseEvent(ASK_CARDS, new string[] { PhotonNetwork.LocalPlayer.UserId, "2" }, raiseEventOptions, SendOptions.SendUnreliable);
+
+        GetComponent<GameLogic>().CleanOptionSelector();
+        GetComponent<GameLogic>().StartTurn();
     }
 }

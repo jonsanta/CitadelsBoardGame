@@ -352,6 +352,7 @@
 "Assets/Scripts/Game/Character Skills/Arquitecto.cs"
 "Assets/Scripts/Game/Character Skills/Artista.cs"
 "Assets/Scripts/Game/Character Skills/Asesino.cs"
+"Assets/Scripts/Game/Character Skills/Character.cs"
 "Assets/Scripts/Game/Character Skills/Guerrero.cs"
 "Assets/Scripts/Game/Character Skills/Ladron.cs"
 "Assets/Scripts/Game/Character Skills/Mago.cs"

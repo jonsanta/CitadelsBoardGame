@@ -40,6 +40,8 @@ public class GameLogic : MonoBehaviour
 
     private bool turn = false;
 
+    private bool _byPassCardSelection = false;
+
     private void Start()
     {
         characters = new(){
@@ -114,7 +116,7 @@ public class GameLogic : MonoBehaviour
         //DISABLE ALL TURN ACTIVE UI
         endButton.gameObject.SetActive(false);
         skillButton.gameObject.SetActive(false);
-        Destroy(GetComponent(Type.GetType(characters[playerInstance.character])));
+        Destroy(GetComponent<Character>());
         foreach (GameObject card in playerInstance.GetCards())
             card.GetComponent<Button>().enabled = false;
 
@@ -128,10 +130,8 @@ public class GameLogic : MonoBehaviour
 
     private void PerformSkill()
     {
-        if (playerInstance.character.name == "1") //If character is Assassin set Assassin skill
-            GetComponent<Asesino>().setSkill(optionSelector, selectionPanel, cardPrefab, characters.Keys.ToArray());
-        else if (playerInstance.character.name == "2") //If character is Thief set Thief skill
-            GetComponent<Ladron>().setSkill(optionSelector, selectionPanel, cardPrefab, characters.Keys.ToArray());
+        if (GetComponent<Character>().isPassive())
+            GetComponent<Character>().setSkill(optionSelector, selectionPanel, cardPrefab, characters.Keys.ToArray());
         else
         {
             skillButton.gameObject.SetActive(true);
@@ -162,6 +162,11 @@ public class GameLogic : MonoBehaviour
             showHideButton.GetComponentInChildren<Text>().text = "Ocultar";
         else
             showHideButton.GetComponentInChildren<Text>().text = "Mostrar";
+    }
+
+    public void byPassCardSelection()
+    {
+        _byPassCardSelection = true;
     }
 
     private void OnEnable()
@@ -229,7 +234,7 @@ public class GameLogic : MonoBehaviour
             if ((string)data[0] == PhotonNetwork.LocalPlayer.UserId)
             {
                 RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient };
-                if (turn)
+                if (turn && !_byPassCardSelection)
                 {
                     selectionPanel.SetActive(true);
                     optionSelector.parent.parent.gameObject.GetComponentInChildren<Text>().text = "Selecciona una carta";
@@ -274,6 +279,7 @@ public class GameLogic : MonoBehaviour
                         g.transform.localScale = new Vector3(1, 1, 1);
                         playerInstance.AddCard(g);
                     }
+                    _byPassCardSelection = false;
                 }
             }
         }
@@ -300,7 +306,11 @@ public class GameLogic : MonoBehaviour
         }
 
         if (obj.Code == CLEAR_CHARACTERS)
+        {
+            if(TryGetComponent(out Character character))
+                Destroy(GetComponent<Character>());
             characterUI.sprite = Resources.Load<Sprite>("Ciudadelas/Personajes/Caratulas/empty");
+        }
 
     }
 }

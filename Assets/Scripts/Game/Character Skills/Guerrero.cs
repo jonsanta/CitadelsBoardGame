@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Guerrero : MonoBehaviour
+public class Guerrero : Character
 {
-    // Start is called before the first frame update
-    void Start()
+    //has passive skill?
+    private const bool passive = false;
+
+    override public bool isPassive()
     {
-        
+        return passive;
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void setSkill(RectTransform optionSelector, GameObject selectionPanel, GameObject characterSelectPrefab, Sprite[] sprites)
     {
-        
+        throw new System.NotImplementedException();
     }
 }

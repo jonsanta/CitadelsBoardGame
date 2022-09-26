@@ -52,7 +52,7 @@ public class PlayableCard : Card, IBeginDragHandler, IDragHandler, IEndDragHandl
         RectTransform rect = transform as RectTransform;
         if (RectTransformUtility.ScreenPointToWorldPointInRectangle(rect, eventData.position, eventData.pressEventCamera, out var globalMousePosition) && GetComponent<Button>().enabled == true)
         {
-            rect.position = Vector3.SmoothDamp(rect.position, globalMousePosition, ref velocity, .05f);
+            rect.position = Vector3.SmoothDamp(rect.position, globalMousePosition, ref velocity, .02f); //.01f works fine
         }
     }
 

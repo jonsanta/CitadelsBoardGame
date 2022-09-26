@@ -5,10 +5,18 @@ using UnityEngine;
 using UnityEngine.UI;
 
 //Represents Assassin character skill
-public class Asesino : MonoBehaviour
+public class Asesino : Character
 {
     //Photon Message constants
     private const byte KILL = 7;
+
+    //has passive skill?
+    private const bool passive = true;
+
+    override public bool isPassive()
+    {
+        return passive;
+    }
 
     /// <summary>
     /// Load Skill
@@ -16,7 +24,7 @@ public class Asesino : MonoBehaviour
     /// <param name="optionSelector">Content RectTransform where prefabs will be instantiated</param>
     /// <param name="characterSelectPrefab">Character card prefab</param>
     /// <param name="sprites">Character Sprites</param>
-    public void setSkill(RectTransform optionSelector, GameObject selectionPanel, GameObject characterSelectPrefab, Sprite[] sprites)
+    override public void setSkill(RectTransform optionSelector, GameObject selectionPanel, GameObject characterSelectPrefab, Sprite[] sprites)
     {
         selectionPanel.SetActive(true);
         optionSelector.parent.parent.gameObject.GetComponentInChildren<Text>().text = "Selecciona el personaje que quieres matar";
