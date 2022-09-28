@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1706.6667
     height: 869.3334
   m_ShowMode: 4
-  m_Title: Game
+  m_Title: Console
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 107
+  controlID: 105
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 74
+  controlID: 22
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -169,7 +169,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 75
+  controlID: 23
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -403,7 +403,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: e45effff1c5fffffbe61ffffc661ffff6667ffff9e67ffff3e6affff426affff9271ffffcc73ffff0474ffffa476ffffa876ffff227dffff5a7dfffff87ffffffc7fffffd282ffff1a83ffff2083ffff5a85ffff9285ffff3488ffff3c88ffff4e8effff868effff2891ffff3091ffff8691ffff9494ffffbe99ffff049affffa29cffffa69cffffe4a1ffff2aa2ffffc8a4ffffcca4ffff9aaaffff06adffff4cadffffeaaffffff2afffff5ab0ffff48b3ffff72b7ffffdeb9ffff24baffffc2bcffffc6bcffff40beffff86beffff24c1ffff2cc1ffff8ec1ffffd0c5ffff10cbffff7ccdffffc2cdffff60d0ffff68d0ffffcad0ffffcad2ffffacd8ffffb2d8ffff26dbffff6cdbffff0adeffff0edeffff26e4ffff6ce4ffff0ae7ffff0ee7ffff8ae8ffffd0e8ffff72ebffff7aebffffe0ebffff94ecffffc8efffff0ef0ffffb0f2ffffb8f2ffff1ef3ffff0efaffff3efaffff24fbffff5e6700002e8b00005c960000f2960000e0970000dc9c0000749d0000629e000006a600001ca6000052a60000b6a60000baa60000aca700008aad000022ae0000f8b60000b6bf000042c0000072c70000fec70000
+      m_ExpandedIDs: 8688ffffbe88ffff5c8bffff608bffff5290ffff8a90ffff2893ffff2c93ffff149affff4c9affffea9cffffee9cffff22a2ffff5aa2fffff8a4fffffca4ffff86a9ffffbea9ffff5cacffff60acffffeab0ffff22b1ffffc0b3ffffc4b3ffff48baffff80baffff1ebdffff22bdffffacc1ffffe4c1ffff82c4ffff86c4ffffd2c9ffff0acaffffa8ccffffacccffff40cfffff74d1ffffacd1ffff4ad4ffff4ed4ffff32d9ffff66dbffff9edbffff3cdeffff40deffff76e2fffface4ffffe4e4ffff82e7ffff86e7ffffbaecfffff2ecffff94efffff9ceffffff2efffff92f1ffff06f4ffff4af6ffff84f6ffff26f9ffff2ef9ffff24fbffffd8870000c2930000fe93000054970000e0970000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -887,21 +887,21 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/Game
+    - Assets/Scenes
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 54
   m_LastFolders:
-  - Assets/Scripts/Game
+  - Assets/Scenes
   m_LastFoldersGridSize: 54
   m_LastProjectPath: E:\AppData\Unity-Projects\CitadelsBoardGame
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 79}
-    m_SelectedIDs: 86640000
-    m_LastClickedID: 25734
+    m_SelectedIDs: be650000
+    m_LastClickedID: 26046
     m_ExpandedIDs: 000000008064000082640000846400008664000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0

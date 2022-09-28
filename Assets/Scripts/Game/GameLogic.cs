@@ -104,7 +104,7 @@ public class GameLogic : MonoBehaviour
         endButton.gameObject.SetActive(true);
         selectionPanel.SetActive(false);
         showHideButton.gameObject.SetActive(false);
-        foreach (GameObject card in playerInstance.GetCards())
+        foreach (GameObject card in playerInstance.GetHand())
             card.GetComponent<Button>().enabled = true;
     }
 
@@ -117,7 +117,7 @@ public class GameLogic : MonoBehaviour
         endButton.gameObject.SetActive(false);
         skillButton.gameObject.SetActive(false);
         Destroy(GetComponent<Character>());
-        foreach (GameObject card in playerInstance.GetCards())
+        foreach (GameObject card in playerInstance.GetHand())
             card.GetComponent<Button>().enabled = false;
 
         turn = false;
