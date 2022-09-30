@@ -92,45 +92,53 @@ public class PlayableCard : Card, IBeginDragHandler, IDragHandler, IEndDragHandl
 
     private void SwapHandCards()
     {
-        RectTransform rect = emptySpace.GetComponent<RectTransform>();
-        if (playerInstance.GetCardIndex(gameObject) == 0){
-            RectTransform rightCard = playerInstance.GetHand()[1].GetComponent<RectTransform>();
-            if (Input.mousePosition.x > rect.TransformPoint(rect.rect.center).x - 170f && Input.mousePosition.y < rect.TransformPoint(rect.rect.center).y *2.5f)
-            {
-                int temp = playerInstance.GetCardIndex(gameObject)+1;
-                playerInstance.RemoveCard(gameObject);
-                playerInstance.AddCardOnIndex(temp, gameObject);
-                emptySpace.transform.SetSiblingIndex(playerInstance.GetCardIndex(gameObject));
-            }
-        }
-        else if(playerInstance.GetCardIndex(gameObject) == playerInstance.GetHand().Count - 1)
+
+        if(Input.GetAxis("Mouse X") > 0)
         {
-            RectTransform leftCard = playerInstance.GetHand()[playerInstance.GetCardIndex(gameObject) - 1].GetComponent<RectTransform>();
-            if (Input.mousePosition.x < leftCard.TransformPoint(leftCard.rect.center).x + 170f && Input.mousePosition.y < leftCard.TransformPoint(leftCard.rect.center).y * 2.5f)
+            if (playerInstance.GetCardIndex(gameObject) < playerInstance.GetHand().Count - 1)
             {
-                int temp = playerInstance.GetCardIndex(gameObject) - 1;
-                playerInstance.RemoveCard(gameObject);
-                playerInstance.AddCardOnIndex(temp, gameObject);
-                emptySpace.transform.SetSiblingIndex(playerInstance.GetCardIndex(gameObject));
+                RectTransform rightCard = playerInstance.GetHand()[playerInstance.GetCardIndex(gameObject) + 1].GetComponent<RectTransform>();
+                if(Input.mousePosition.y < rightCard.TransformPoint(rightCard.rect.center).y * 3f)
+                {
+                    if (Input.mousePosition.x > rightCard.TransformPoint(rightCard.rect.center).x - 100f)
+                    {
+                        emptySpace.transform.SetParent(hand);
+                        emptySpace.SetActive(true);
+                        int temp = playerInstance.GetCardIndex(gameObject) + 1;
+                        playerInstance.RemoveCard(gameObject);
+                        playerInstance.AddCardOnIndex(temp, gameObject);
+                        emptySpace.transform.SetSiblingIndex(playerInstance.GetCardIndex(gameObject));
+                    }
+                }
+                else
+                {
+                    emptySpace.transform.SetParent(null);
+                    emptySpace.SetActive(false);
+                }
             }
-        }
-        else
+        } 
+        else if (Input.GetAxis("Mouse X") < 0)
         {
-            RectTransform rightCard = playerInstance.GetHand()[playerInstance.GetCardIndex(gameObject) + 1].GetComponent<RectTransform>();
-            RectTransform leftCard = playerInstance.GetHand()[playerInstance.GetCardIndex(gameObject) - 1].GetComponent<RectTransform>();
-            if (Input.mousePosition.x > rightCard.TransformPoint(rightCard.rect.center).x - 170f && Input.mousePosition.y < rightCard.TransformPoint(rightCard.rect.center).y * 2.5f)
+            if (playerInstance.GetCardIndex(gameObject) > 0)
             {
-                int temp = playerInstance.GetCardIndex(gameObject) + 1;
-                playerInstance.RemoveCard(gameObject);
-                playerInstance.AddCardOnIndex(temp, gameObject);
-                emptySpace.transform.SetSiblingIndex(playerInstance.GetCardIndex(gameObject));
-            }
-            if (Input.mousePosition.x < leftCard.TransformPoint(leftCard.rect.center).x + 170f && Input.mousePosition.y < leftCard.TransformPoint(leftCard.rect.center).y * 2.5f)
-            {
-                int temp = playerInstance.GetCardIndex(gameObject) - 1;
-                playerInstance.RemoveCard(gameObject);
-                playerInstance.AddCardOnIndex(temp, gameObject);
-                emptySpace.transform.SetSiblingIndex(playerInstance.GetCardIndex(gameObject));
+                RectTransform leftCard = playerInstance.GetHand()[playerInstance.GetCardIndex(gameObject) - 1].GetComponent<RectTransform>();
+                if(Input.mousePosition.y < leftCard.TransformPoint(leftCard.rect.center).y * 3f)
+                {
+                    if (Input.mousePosition.x < leftCard.TransformPoint(leftCard.rect.center).x + 100f)
+                    {
+                        emptySpace.transform.SetParent(hand);
+                        emptySpace.SetActive(true);
+                        int temp = playerInstance.GetCardIndex(gameObject) - 1;
+                        playerInstance.RemoveCard(gameObject);
+                        playerInstance.AddCardOnIndex(temp, gameObject);
+                        emptySpace.transform.SetSiblingIndex(playerInstance.GetCardIndex(gameObject));
+                    }
+                }
+                else
+                {
+                    emptySpace.transform.SetParent(null);
+                    emptySpace.SetActive(false);
+                }
             }
         }
     }
