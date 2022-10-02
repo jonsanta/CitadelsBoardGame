@@ -42,8 +42,11 @@ public class PlayableCard : Card, IBeginDragHandler, IDragHandler, IEndDragHandl
 
     void IBeginDragHandler.OnBeginDrag(PointerEventData eventData)
     {
+        //Increase dragged card size & removes its anchors
         transform.SetParent(hand.parent);
         SetCardSize(width, height);
+
+        //Empty space that remembers the cards hand position
         emptySpace = new GameObject();
         emptySpace.AddComponent<Image>();
         emptySpace.GetComponent<Image>().color = new Color(0, 0, 0, 0);
@@ -55,7 +58,9 @@ public class PlayableCard : Card, IBeginDragHandler, IDragHandler, IEndDragHandl
 
     void IDragHandler.OnDrag(PointerEventData eventData)
     {
-        hand.gameObject.GetComponent<Animator>().SetBool("show", true);
+        hand.gameObject.GetComponent<Animator>().SetBool("show", true); //show hand while dragging card
+
+        //Drag card
         RectTransform rect = transform as RectTransform;
         if (RectTransformUtility.ScreenPointToWorldPointInRectangle(rect, eventData.position, eventData.pressEventCamera, out var globalMousePosition))
         {
@@ -67,12 +72,12 @@ public class PlayableCard : Card, IBeginDragHandler, IDragHandler, IEndDragHandl
     void IEndDragHandler.OnEndDrag(PointerEventData eventData)
     {
         Destroy(emptySpace);
-        if (GetComponent<Button>().enabled && Input.mousePosition.y > Screen.height * 0.365f)
+        if (GetComponent<Button>().enabled && Input.mousePosition.y > Screen.height * 0.365f) //Play card
         {
             playerInstance.PlayCard(gameObject);
             hand.gameObject.GetComponent<Animator>().SetBool("show", false);
         }
-        else
+        else //Return card to hand
         {
             transform.SetParent(hand);
             SetCardSize(100f, 150f);
@@ -82,36 +87,35 @@ public class PlayableCard : Card, IBeginDragHandler, IDragHandler, IEndDragHandl
 
     private void SwapHandCards()
     {
-        if(Input.mousePosition.y < Screen.height * 0.365f)
+        if(Input.mousePosition.y < Screen.height * 0.365f) //Animations will be shown while mouse is near hand
         {
             RectTransform rightCard = playerInstance.GetCardIndex(gameObject) < playerInstance.GetHand().Count - 1 ? playerInstance.GetHand()[playerInstance.GetCardIndex(gameObject) + 1].GetComponent<RectTransform>() : null;
             RectTransform leftCard = playerInstance.GetCardIndex(gameObject) > 0 ? playerInstance.GetHand()[playerInstance.GetCardIndex(gameObject) - 1].GetComponent<RectTransform>() : null;
-            if (Input.GetAxis("Mouse X") > 0 && rightCard is not null)
+
+            if (Input.GetAxis("Mouse X") > 0 && rightCard is not null) // if mouse is moving to the right & exists card on the right
             {
-                if (Input.mousePosition.x > rightCard.TransformPoint(rightCard.rect.center).x - 100f)
+                if (Input.mousePosition.x > rightCard.TransformPoint(rightCard.rect.center).x - 100f)// Swap card positions
                 {
                     emptySpace.transform.SetParent(hand);
                     emptySpace.SetActive(true);
-                    int temp = playerInstance.GetCardIndex(gameObject) + 1;
                     playerInstance.RemoveCard(gameObject);
-                    playerInstance.AddCardOnIndex(temp, gameObject);
+                    playerInstance.AddCardOnIndex(playerInstance.GetCardIndex(gameObject) + 1, gameObject);
                     emptySpace.transform.SetSiblingIndex(playerInstance.GetCardIndex(gameObject));
                 }
             }
-            else if(leftCard is not null)
+            else if(leftCard is not null) // if mouse is moving to the left & exists card on the left
             {
-                if (Input.mousePosition.x < leftCard.TransformPoint(leftCard.rect.center).x + 100f)
+                if (Input.mousePosition.x < leftCard.TransformPoint(leftCard.rect.center).x + 100f)// Swap card positions
                 {
                     emptySpace.transform.SetParent(hand);
                     emptySpace.SetActive(true);
-                    int temp = playerInstance.GetCardIndex(gameObject) - 1;
                     playerInstance.RemoveCard(gameObject);
-                    playerInstance.AddCardOnIndex(temp, gameObject);
+                    playerInstance.AddCardOnIndex(playerInstance.GetCardIndex(gameObject) - 1, gameObject);
                     emptySpace.transform.SetSiblingIndex(playerInstance.GetCardIndex(gameObject));
                 }
             }
         }
-        else
+        else //Disable animations
         {
             emptySpace.transform.SetParent(null);
             emptySpace.SetActive(false);
