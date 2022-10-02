@@ -20,9 +20,6 @@ public class GameLogic : MonoBehaviour
     private const byte CLEAR_CHARACTERS = 10;
     private const byte RETURN_CARD = 11;
 
-    private GamePlayer playerInstance = new(); //Contains player data (hand cards, gold, ..)
-
-
     //UI
     [SerializeField] private GameObject selectionPanel;
     [SerializeField] private RectTransform optionSelector; //RecTransform that will be used as button container
@@ -33,7 +30,6 @@ public class GameLogic : MonoBehaviour
     [SerializeField] private Button showHideButton;
     [SerializeField] private Button endButton;
     [SerializeField] private Button skillButton;
-    [SerializeField] private Text goldUI;
     [SerializeField] private Image characterUI;
 
     private Dictionary<Sprite, string> characters; //Translates sprite ID to Name
@@ -73,13 +69,13 @@ public class GameLogic : MonoBehaviour
                 GameObject g = GenerateCard(80, 115, true, sprite, optionSelector);
                 g.GetComponent<Button>().onClick.AddListener(() =>
                 {
-                    playerInstance.character = sprite; //Set as selected character for current round
+                    GetComponent<GamePlayer>().character = sprite; //Set as selected character for current round
                     gameObject.AddComponent(Type.GetType(characters[sprite])); //Generate characters skill script
 
                     characterUI.sprite = Resources.Load<Sprite>($"Ciudadelas/Personajes/Caratulas/{sprite.name}");
 
                     RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient };
-                    PhotonNetwork.RaiseEvent(PHASE_END, new string[] { playerInstance.character.name, PhotonNetwork.LocalPlayer.UserId }, raiseEventOptions, SendOptions.SendUnreliable);
+                    PhotonNetwork.RaiseEvent(PHASE_END, new string[] { GetComponent<GamePlayer>().character.name, PhotonNetwork.LocalPlayer.UserId }, raiseEventOptions, SendOptions.SendUnreliable);
                     CleanOptionSelector();
                     selectionPanel.SetActive(false);
                 });
@@ -104,7 +100,7 @@ public class GameLogic : MonoBehaviour
         endButton.gameObject.SetActive(true);
         selectionPanel.SetActive(false);
         showHideButton.gameObject.SetActive(false);
-        foreach (GameObject card in playerInstance.GetHand())
+        foreach (GameObject card in GetComponent<GamePlayer>().GetHand())
             card.GetComponent<Button>().enabled = true;
     }
 
@@ -117,9 +113,10 @@ public class GameLogic : MonoBehaviour
         endButton.gameObject.SetActive(false);
         skillButton.gameObject.SetActive(false);
         Destroy(GetComponent<Character>());
-        foreach (GameObject card in playerInstance.GetHand())
+        foreach (GameObject card in GetComponent<GamePlayer>().GetHand())
             card.GetComponent<Button>().enabled = false;
 
+        GetComponent<GamePlayer>().EndTurn();
         turn = false;
     }
 
@@ -211,8 +208,7 @@ public class GameLogic : MonoBehaviour
                     gold.GetComponent<Button>().onClick.AddListener(() =>
                     {
                         CleanOptionSelector();
-                        playerInstance.AddGold(2);
-                        goldUI.text = playerInstance.GetGold().ToString();
+                        GetComponent<GamePlayer>().AddGold(2);
                         PerformSkill();
                     });
 
@@ -244,10 +240,10 @@ public class GameLogic : MonoBehaviour
                     {
                         GameObject g = Instantiate(cardPrefab);
                         g.AddComponent<PlayableCard>();
-                        g.GetComponent<PlayableCard>().SetCard(Deck.Search((string)data[1]), turn, hand, playerInstance);
+                        g.GetComponent<PlayableCard>().SetCard(Deck.Search((string)data[1]), turn, hand, GetComponent<GamePlayer>());
                         g.transform.SetParent(hand);
                         g.transform.localScale = new Vector3(1, 1, 1);
-                        playerInstance.AddCard(g);
+                        GetComponent<GamePlayer>().AddCard(g);
                         PhotonNetwork.RaiseEvent(RETURN_CARD, (string)data[2], raiseEventOptions, SendOptions.SendUnreliable);
                         CleanOptionSelector();
                         PerformSkill();
@@ -258,10 +254,10 @@ public class GameLogic : MonoBehaviour
                     {
                         GameObject g = Instantiate(cardPrefab);
                         g.AddComponent<PlayableCard>();
-                        g.GetComponent<PlayableCard>().SetCard(Deck.Search((string)data[2]), turn, hand, playerInstance);
+                        g.GetComponent<PlayableCard>().SetCard(Deck.Search((string)data[2]), turn, hand, GetComponent<GamePlayer>());
                         g.transform.SetParent(hand);
                         g.transform.localScale = new Vector3(1, 1, 1);
-                        playerInstance.AddCard(g);
+                        GetComponent<GamePlayer>().AddCard(g);
                         PhotonNetwork.RaiseEvent(RETURN_CARD, (string)data[1] , raiseEventOptions, SendOptions.SendUnreliable);
                         CleanOptionSelector();
                         PerformSkill();
@@ -274,10 +270,10 @@ public class GameLogic : MonoBehaviour
                         //Instantiate cards on hand
                         GameObject g = Instantiate(cardPrefab);
                         g.AddComponent<PlayableCard>();
-                        g.GetComponent<PlayableCard>().SetCard(Deck.Search((string)data[i]), turn, hand, playerInstance);
+                        g.GetComponent<PlayableCard>().SetCard(Deck.Search((string)data[i]), turn, hand, GetComponent<GamePlayer>());
                         g.transform.SetParent(hand);
                         g.transform.localScale = new Vector3(1, 1, 1);
-                        playerInstance.AddCard(g);
+                        GetComponent<GamePlayer>().AddCard(g);
                     }
                     _byPassCardSelection = false;
                 }
@@ -287,12 +283,11 @@ public class GameLogic : MonoBehaviour
         if (obj.Code == STEAL) // Called when player has been stolen
         {
             object[] data = (object[])obj.CustomData;
-            if(playerInstance.character.name == (string)data[0])
+            if(GetComponent<GamePlayer>().character.name == (string)data[0])
             {
                 RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
-                PhotonNetwork.RaiseEvent(ADD_GOLD, new string[] { (string)data[1], playerInstance.GetGold().ToString()}, raiseEventOptions, SendOptions.SendUnreliable);
-                playerInstance.AddGold(-playerInstance.GetGold());
-                goldUI.text = playerInstance.GetGold().ToString();
+                PhotonNetwork.RaiseEvent(ADD_GOLD, new string[] { (string)data[1], GetComponent<GamePlayer>().GetGold().ToString()}, raiseEventOptions, SendOptions.SendUnreliable);
+                GetComponent<GamePlayer>().AddGold(-GetComponent<GamePlayer>().GetGold());
             }
         }
 
@@ -300,9 +295,7 @@ public class GameLogic : MonoBehaviour
         {
             object[] data = (object[])obj.CustomData;
             if (PhotonNetwork.LocalPlayer.UserId == (string)data[0])
-                playerInstance.AddGold(int.Parse((string)data[1]));
-
-            goldUI.text = playerInstance.GetGold().ToString();
+                GetComponent<GamePlayer>().AddGold(int.Parse((string)data[1]));
         }
 
         if (obj.Code == CLEAR_CHARACTERS)

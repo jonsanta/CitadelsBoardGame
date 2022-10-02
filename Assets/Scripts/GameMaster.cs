@@ -186,7 +186,6 @@ public class GameMaster : MonoBehaviour
             {
 				object[] data = (object[])obj.CustomData;
 
-				Debug.Log((string)data[0]);
 				selectedCharacters.Add((string)data[0], (string)data[1]); //Add character selection
 
 				if (turn >= playerList.Count) //If all players have selected a character swap phase
@@ -230,7 +229,6 @@ public class GameMaster : MonoBehaviour
 		if(obj.Code == RETURN_CARD)
         {
 			object data = obj.CustomData;
-			Debug.Log(Deck.Search((string)data)[1]);
 			deck.Enqueue((string)data);
         }
 

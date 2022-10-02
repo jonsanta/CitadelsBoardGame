@@ -6,38 +6,28 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(Image))]
 public class PlayableCard : Card, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    private int id; //card id
-    private string cardName; //card name
-    private int price; // card price
-    private string colour; //card colour
+    private string[] data;
 
     [SerializeField] private Transform hand = null;
-    private GamePlayer playerInstance = null;
+    private GamePlayer player = null;
 
     private Vector3 velocity = Vector3.zero;
 
     private GameObject emptySpace;
 
-    public void SetCard(string[] data, bool flag, Transform hand, GamePlayer playerInstance)
+    public void SetCard(string[] data, bool flag, Transform hand, GamePlayer player)
     {
-        id = int.Parse(data[0]);
-        cardName = data[1];
-        price = int.Parse(data[2]);
-        colour = data[3];
         GetComponent<LayoutElement>().preferredWidth = width;
         GetComponent<LayoutElement>().preferredHeight = height;
 
+        this.data = data;
+
         this.hand = hand;
-        this.playerInstance = playerInstance;
+        this.player = player;
 
         foreach (Image image in GetComponentsInChildren<Image>())
-            if (image.gameObject.name == "Sprite") image.sprite = Resources.Load<Sprite>($"Ciudadelas/Distritos/{cardName}");
+            if (image.gameObject.name == "Sprite") image.sprite = Resources.Load<Sprite>($"Ciudadelas/Distritos/{data[1]}");
         GetComponent<Button>().enabled = flag;
-    }
-
-    public string GetCardName()
-    {
-        return cardName;
     }
 
     void IBeginDragHandler.OnBeginDrag(PointerEventData eventData)
@@ -53,7 +43,7 @@ public class PlayableCard : Card, IBeginDragHandler, IDragHandler, IEndDragHandl
         emptySpace.AddComponent<LayoutElement>();
         emptySpace.GetComponent<LayoutElement>().preferredWidth = 80f;
         emptySpace.transform.SetParent(hand);
-        emptySpace.transform.SetSiblingIndex(playerInstance.GetCardIndex(gameObject));
+        emptySpace.transform.SetSiblingIndex(player.GetCardIndex(gameObject));
     }
 
     void IDragHandler.OnDrag(PointerEventData eventData)
@@ -72,16 +62,19 @@ public class PlayableCard : Card, IBeginDragHandler, IDragHandler, IEndDragHandl
     void IEndDragHandler.OnEndDrag(PointerEventData eventData)
     {
         Destroy(emptySpace);
+        transform.SetParent(hand);
+        SetCardSize(100f, 150f);
+        transform.SetSiblingIndex(player.GetCardIndex(gameObject));
+
         if (GetComponent<Button>().enabled && Input.mousePosition.y > Screen.height * 0.365f) //Play card
         {
-            playerInstance.PlayCard(gameObject);
             hand.gameObject.GetComponent<Animator>().SetBool("show", false);
-        }
-        else //Return card to hand
-        {
-            transform.SetParent(hand);
-            SetCardSize(100f, 150f);
-            transform.SetSiblingIndex(playerInstance.GetCardIndex(gameObject));
+            if (player.PlayCard(data))
+            {
+                player.RemoveCard(gameObject);
+                Destroy(gameObject);
+            }
+            else Debug.Log("No hay suficiente dinero");
         }
     }
 
@@ -89,8 +82,8 @@ public class PlayableCard : Card, IBeginDragHandler, IDragHandler, IEndDragHandl
     {
         if(Input.mousePosition.y < Screen.height * 0.365f) //Animations will be shown while mouse is near hand
         {
-            RectTransform rightCard = playerInstance.GetCardIndex(gameObject) < playerInstance.GetHand().Count - 1 ? playerInstance.GetHand()[playerInstance.GetCardIndex(gameObject) + 1].GetComponent<RectTransform>() : null;
-            RectTransform leftCard = playerInstance.GetCardIndex(gameObject) > 0 ? playerInstance.GetHand()[playerInstance.GetCardIndex(gameObject) - 1].GetComponent<RectTransform>() : null;
+            RectTransform rightCard = player.GetCardIndex(gameObject) < player.GetHand().Count - 1 ? player.GetHand()[player.GetCardIndex(gameObject) + 1].GetComponent<RectTransform>() : null;
+            RectTransform leftCard = player.GetCardIndex(gameObject) > 0 ? player.GetHand()[player.GetCardIndex(gameObject) - 1].GetComponent<RectTransform>() : null;
 
             if (Input.GetAxis("Mouse X") > 0 && rightCard is not null) // if mouse is moving to the right & exists card on the right
             {
@@ -98,9 +91,10 @@ public class PlayableCard : Card, IBeginDragHandler, IDragHandler, IEndDragHandl
                 {
                     emptySpace.transform.SetParent(hand);
                     emptySpace.SetActive(true);
-                    playerInstance.RemoveCard(gameObject);
-                    playerInstance.AddCardOnIndex(playerInstance.GetCardIndex(gameObject) + 1, gameObject);
-                    emptySpace.transform.SetSiblingIndex(playerInstance.GetCardIndex(gameObject));
+                    int temp = player.GetCardIndex(gameObject) + 1;
+                    player.RemoveCard(gameObject);
+                    player.AddCardOnIndex(temp, gameObject);
+                    emptySpace.transform.SetSiblingIndex(player.GetCardIndex(gameObject));
                 }
             }
             else if(leftCard is not null) // if mouse is moving to the left & exists card on the left
@@ -109,9 +103,10 @@ public class PlayableCard : Card, IBeginDragHandler, IDragHandler, IEndDragHandl
                 {
                     emptySpace.transform.SetParent(hand);
                     emptySpace.SetActive(true);
-                    playerInstance.RemoveCard(gameObject);
-                    playerInstance.AddCardOnIndex(playerInstance.GetCardIndex(gameObject) - 1, gameObject);
-                    emptySpace.transform.SetSiblingIndex(playerInstance.GetCardIndex(gameObject));
+                    int temp = player.GetCardIndex(gameObject) - 1;
+                    player.RemoveCard(gameObject);
+                    player.AddCardOnIndex(temp, gameObject);
+                    emptySpace.transform.SetSiblingIndex(player.GetCardIndex(gameObject));
                 }
             }
         }

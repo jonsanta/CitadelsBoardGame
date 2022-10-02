@@ -420,6 +420,7 @@
 "Assets/Scripts/Game/GameLogic.cs"
 "Assets/Scripts/Game/GamePlayer.cs"
 "Assets/Scripts/Game/PlayableCard.cs"
+"Assets/Scripts/Game/PlayedCard.cs"
 "Assets/Scripts/GameMaster.cs"
 "Assets/Scripts/Room/PlayerListing.cs"
 "Assets/Scripts/Room/Room.cs"

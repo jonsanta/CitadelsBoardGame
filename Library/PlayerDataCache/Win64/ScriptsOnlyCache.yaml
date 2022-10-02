@@ -3,6 +3,8 @@ ScriptsOnlyBuild:
     Assembly-CSharp.dll:
     - Connection
     - GameLogic
+    - GamePlayer
+    - PlayedCard
     - PlayerListing
     - Room
     - RoomListing
@@ -28,14 +30,22 @@ ScriptsOnlyBuild:
     - UnityEditor.U2D.Animation.BoneGizmo
     Unity.2D.IK.Editor.dll:
     - UnityEditor.U2D.IK.IKEditorManager
+    - UnityEditor.U2D.IK.IKGizmos
     Unity.2D.Tilemap.Editor.dll:
+    - UnityEditor.Tilemaps.GridBrush
     - UnityEditor.Tilemaps.GridPaintingState
     - UnityEditor.Tilemaps.GridPaletteBrushes
     - UnityEditor.Tilemaps.GridPalettes
     - UnityEditor.Tilemaps.SceneViewGridManager
     - UnityEditor.Tilemaps.SceneViewOpenTilePaletteHelper
     - UnityEditor.Tilemaps.TileDragAndDropManager
+    - UnityEditor.Tilemaps.TilemapEditorToolPreferences
     - UnityEditor.Tilemaps.TilemapPrefabStageHelper
+    Unity.2D.Tilemap.Extras.Editor.dll:
+    - UnityEditor.Tilemaps.GameObjectBrush
+    - UnityEditor.Tilemaps.GroupBrush
+    - UnityEditor.Tilemaps.LineBrush
+    - UnityEditor.Tilemaps.RandomBrush
     Unity.Rider.Editor.dll:
     - Packages.Rider.Editor.UnitTesting.CallbackData
     UnityEditor.Graphs.dll:
@@ -146,11 +156,15 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 6174}
     - Class: 114
+      Script: {instanceID: 6416}
+    - Class: 114
       Script: {instanceID: 7058}
     - Class: 114
       Script: {instanceID: 7694}
     - Class: 114
       Script: {instanceID: 8152}
+    - Class: 114
+      Script: {instanceID: 26122}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -797,7 +811,7 @@ ScriptsOnlyBuild:
     className: Button
   - hash:
       serializedVersion: 2
-      Hash: 10a0243e391750f1aa72102cce949314
+      Hash: 4700ce70040a6fdb10bb09a84a60cc00
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameLogic
@@ -1395,6 +1409,12 @@ ScriptsOnlyBuild:
     assemblyName: PhotonUnityNetworking.Demos.dll
     namespaceName: Photon.Pun.Demo.Cockpit
     className: CountOfPlayersInRoomProperty
+  - hash:
+      serializedVersion: 2
+      Hash: 877ef49a6f382a7355e4f570727a1dc5
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: GamePlayer
   - hash:
       serializedVersion: 2
       Hash: d1f07c9e64b7817e6271f80bb03de25f
@@ -2211,6 +2231,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core.dll
     namespaceName: Unity.VisualScripting
     className: UnityOnSliderValueChangedMessageListener
+  - hash:
+      serializedVersion: 2
+      Hash: f489a83c5a9d6f02f3d9a52496cf205e
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PlayedCard
   platform: 19
   scenePathNames:
   - Assets/Scenes/Lobby.unity
