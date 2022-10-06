@@ -2110,6 +2110,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1975005289}
   - component: {fileID: 1975005288}
+  - component: {fileID: 1975005291}
   - component: {fileID: 1975005290}
   m_Layer: 0
   m_Name: Player
@@ -2169,6 +2170,25 @@ MonoBehaviour:
   CardPrefab: {fileID: 2803133985063166435, guid: e338036dc653c444c95361b3b8cd7a8e, type: 3}
   playedCardPrefab: {fileID: 1930726984489866309, guid: a9ba6b4fa872d0647aacfea5f7cbb05c, type: 3}
   goldUI: {fileID: 415623743}
+--- !u!114 &1975005291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1975005287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cccaff0c147170945995a9f97f6ac762, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectionPanel: {fileID: 1478807119}
+  showHideButton: {fileID: 1098393597}
+  optionSelector: {fileID: 624148847}
+  discarded: {fileID: 167809578}
+  cardPrefab: {fileID: 2803133985063166435, guid: e338036dc653c444c95361b3b8cd7a8e, type: 3}
+  hand: {fileID: 1076999432}
+  characterUI: {fileID: 1991380454}
 --- !u!1 &1991380453
 GameObject:
   m_ObjectHideFlags: 0

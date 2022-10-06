@@ -20,7 +20,7 @@ public class Arquitecto : Character
 
     override public void setSkill(RectTransform optionSelector, GameObject selectionPanel, GameObject characterSelectPrefab, Sprite[] sprites)
     {
-        GetComponent<GameLogic>().byPassCardSelection();
+        GetComponent<GameLogicNetworking>().byPassCardSelection();
 
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient };
         PhotonNetwork.RaiseEvent(ASK_CARDS, new string[] { PhotonNetwork.LocalPlayer.UserId, "2" }, raiseEventOptions, SendOptions.SendUnreliable);

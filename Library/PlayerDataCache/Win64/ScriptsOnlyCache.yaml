@@ -3,6 +3,7 @@ ScriptsOnlyBuild:
     Assembly-CSharp.dll:
     - Connection
     - GameLogic
+    - GameLogicNetworking
     - GamePlayer
     - PlayedCard
     - PlayerListing
@@ -162,9 +163,11 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 7694}
     - Class: 114
-      Script: {instanceID: 8152}
+      Script: {instanceID: 8026}
     - Class: 114
-      Script: {instanceID: 26122}
+      Script: {instanceID: 8154}
+    - Class: 114
+      Script: {instanceID: 26182}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -271,21 +274,21 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 7836}
     - Class: 114
-      Script: {instanceID: 8270}
+      Script: {instanceID: 8272}
     - Class: 114
-      Script: {instanceID: 8476}
+      Script: {instanceID: 8478}
     - Class: 114
-      Script: {instanceID: 9136}
+      Script: {instanceID: 9138}
     - Class: 114
-      Script: {instanceID: 9140}
+      Script: {instanceID: 9142}
     - Class: 114
-      Script: {instanceID: 9620}
+      Script: {instanceID: 9622}
     - Class: 114
-      Script: {instanceID: 9784}
+      Script: {instanceID: 9786}
     - Class: 114
-      Script: {instanceID: 10074}
+      Script: {instanceID: 10076}
     - Class: 114
-      Script: {instanceID: 10192}
+      Script: {instanceID: 10194}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -1681,6 +1684,12 @@ ScriptsOnlyBuild:
     className: PingProperty
   - hash:
       serializedVersion: 2
+      Hash: f489a83c5a9d6f02f3d9a52496cf205e
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PlayedCard
+  - hash:
+      serializedVersion: 2
       Hash: 5e8a01a14cef8c5fb6866e39e13545df
     assemblyName: PhotonUnityNetworking.Demos.dll
     namespaceName: UnityStandardAssets.Characters.ThirdPerson.PunDemos
@@ -2233,10 +2242,10 @@ ScriptsOnlyBuild:
     className: UnityOnSliderValueChangedMessageListener
   - hash:
       serializedVersion: 2
-      Hash: f489a83c5a9d6f02f3d9a52496cf205e
+      Hash: 015124acc9fb3d34ae2b81ac79b1f2bb
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: PlayedCard
+    className: GameLogicNetworking
   platform: 19
   scenePathNames:
   - Assets/Scenes/Lobby.unity
