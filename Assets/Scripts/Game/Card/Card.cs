@@ -7,7 +7,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     protected float width = 40f;
     protected float height = 65f;
-    protected bool selectable = true;
+    protected bool selectable = true; //Some cards might be clicked or not
 
     public void SetCard(float width, float height, bool selectable)
     {
@@ -17,7 +17,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         this.selectable = selectable;
     }
 
-    protected void SetCardSize(float width, float height)
+    protected void SetCardSize(float width, float height) //Adjust card size
     {
         GetComponent<LayoutElement>().preferredWidth = width;
         GetComponent<LayoutElement>().preferredHeight = height;
@@ -27,10 +27,10 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         if (selectable)
         {
-            if (GetComponentInParent<Animator>() != null) //Animation for cards in hand
+            if (GetComponentInParent<Animator>() != null) //Show Hand cards
                 GetComponentInParent<Animator>().SetBool("show", true);
-            SetCardSize(100f, 150f);
-            GetComponent<Outline>().enabled = true;
+            SetCardSize(100f, 150f); //Increase pointed card size
+            GetComponent<Outline>().enabled = true; //Outline pointed card
         }
     }
 
@@ -38,10 +38,10 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         if (selectable)
         {
-            if (GetComponentInParent<Animator>() != null) //Animation for cards in hand
+            if (GetComponentInParent<Animator>() != null) //Hide Hand cards
                 GetComponentInParent<Animator>().SetBool("show", false);
-            SetCardSize(width, height);
-            GetComponent<Outline>().enabled = false;
+            SetCardSize(width, height); //Return pointed card to default size
+            GetComponent<Outline>().enabled = false; //Disable outline for pointed card
         }
     }
 }

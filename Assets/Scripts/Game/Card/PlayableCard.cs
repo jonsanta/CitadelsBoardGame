@@ -8,12 +8,12 @@ public class PlayableCard : Card, IBeginDragHandler, IDragHandler, IEndDragHandl
 {
     private string[] data;
 
-    [SerializeField] private Transform hand = null;
+    private Transform hand = null;
     private GamePlayer player = null;
 
     private Vector3 velocity = Vector3.zero;
 
-    private GameObject emptySpace;
+    private GameObject emptySpace; //simulates card position in hand while being dragged
 
     public void SetCard(string[] data, bool flag, Transform hand, GamePlayer player)
     {
@@ -54,16 +54,16 @@ public class PlayableCard : Card, IBeginDragHandler, IDragHandler, IEndDragHandl
         RectTransform rect = transform as RectTransform;
         if (RectTransformUtility.ScreenPointToWorldPointInRectangle(rect, eventData.position, eventData.pressEventCamera, out var globalMousePosition))
         {
-            rect.position = Vector3.SmoothDamp(rect.position, globalMousePosition, ref velocity, .02f); //.01f works fine
+            rect.position = Vector3.SmoothDamp(rect.position, globalMousePosition, ref velocity, .015f); //.01f works fine
         }
         SwapHandCards();
     }
 
     void IEndDragHandler.OnEndDrag(PointerEventData eventData)
     {
+        //Drop card
         Destroy(emptySpace);
         transform.SetParent(hand);
-        SetCardSize(100f, 150f);
         transform.SetSiblingIndex(player.GetCardIndex(gameObject));
 
         if (GetComponent<Button>().enabled && Input.mousePosition.y > Screen.height * 0.365f) //Play card
@@ -82,12 +82,14 @@ public class PlayableCard : Card, IBeginDragHandler, IDragHandler, IEndDragHandl
     {
         if(Input.mousePosition.y < Screen.height * 0.365f) //Animations will be shown while mouse is near hand
         {
+            //Detect if dragged card has cards to his right
             RectTransform rightCard = player.GetCardIndex(gameObject) < player.GetHand().Count - 1 ? player.GetHand()[player.GetCardIndex(gameObject) + 1].GetComponent<RectTransform>() : null;
+            //Detect if dragged card has cards to his left
             RectTransform leftCard = player.GetCardIndex(gameObject) > 0 ? player.GetHand()[player.GetCardIndex(gameObject) - 1].GetComponent<RectTransform>() : null;
 
             if (Input.GetAxis("Mouse X") > 0 && rightCard is not null) // if mouse is moving to the right & exists card on the right
             {
-                if (Input.mousePosition.x > rightCard.TransformPoint(rightCard.rect.center).x - 100f)// Swap card positions
+                if (Input.mousePosition.x > rightCard.TransformPoint(rightCard.rect.center).x - 100f)// Swap card position to his right
                 {
                     emptySpace.transform.SetParent(hand);
                     emptySpace.SetActive(true);
@@ -99,7 +101,7 @@ public class PlayableCard : Card, IBeginDragHandler, IDragHandler, IEndDragHandl
             }
             else if(leftCard is not null) // if mouse is moving to the left & exists card on the left
             {
-                if (Input.mousePosition.x < leftCard.TransformPoint(leftCard.rect.center).x + 100f)// Swap card positions
+                if (Input.mousePosition.x < leftCard.TransformPoint(leftCard.rect.center).x + 100f)// Swap card position to his left
                 {
                     emptySpace.transform.SetParent(hand);
                     emptySpace.SetActive(true);

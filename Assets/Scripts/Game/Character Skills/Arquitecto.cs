@@ -18,9 +18,9 @@ public class Arquitecto : Character
         return passive;
     }
 
-    override public void setSkill(RectTransform optionSelector, GameObject selectionPanel, GameObject characterSelectPrefab, Sprite[] sprites)
+    override public void setSkill(Sprite[] sprites)
     {
-        GetComponent<GameLogicNetworking>().byPassCardSelection();
+        GetComponent<GameLogicNetworking>().byPassCardSelection(); //ENABLE GIVE CARDS DIRECTLY TO HAND
 
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient };
         PhotonNetwork.RaiseEvent(ASK_CARDS, new string[] { PhotonNetwork.LocalPlayer.UserId, "2" }, raiseEventOptions, SendOptions.SendUnreliable);

@@ -12,14 +12,20 @@ public class GameLogic : MonoBehaviour
 {
     //Photon Message constants
     private const byte PHASE_END = 3;
+    private const byte GIVE_TURN = 4;
+    private const byte GIVE_CARDS = 5;
+    private const byte RETURN_CARD = 11;
 
-    //UI
-    [SerializeField] private GameObject selectionPanel;
+    //Prefabs
+    [SerializeField] private GameObject cardPrefab; //card prefab
+
+    //Transforms
     [SerializeField] private RectTransform optionSelector; //RecTransform that will be used as button container
     [SerializeField] private RectTransform discarded;
     [SerializeField] private RectTransform hand; //RecTransform that will be used as button container
-    [SerializeField] private GameObject cardPrefab; //card prefab
 
+    //UI
+    [SerializeField] private GameObject selectionPanel;
     [SerializeField] private Button showHideButton;
     [SerializeField] private Button endButton;
     [SerializeField] private Button skillButton;
@@ -44,47 +50,6 @@ public class GameLogic : MonoBehaviour
         };
     }
 
-    /// <summary>
-    /// Generates character selection buttons
-    /// </summary>
-    /// <param name="selected"></param>
-    public void showCharacterSelection(string[] selected)
-    {
-        selectionPanel.SetActive(true);
-        optionSelector.parent.parent.gameObject.GetComponentInChildren<Text>().text = "Selecciona personaje";
-        discarded.parent.gameObject.SetActive(true);
-        foreach (Sprite sprite in characters.Keys)
-        {
-            if (!selected.ToList().Contains(sprite.name)) //instantiate only available characters to select
-            {
-                GameObject g = GenerateCard(80, 115, true, sprite, optionSelector);
-                g.GetComponent<Button>().onClick.AddListener(() =>
-                {
-                    GetComponent<GamePlayer>().character = sprite; //Set as selected character for current round
-                    gameObject.AddComponent(Type.GetType(characters[sprite])); //Generate characters skill script
-
-                    characterUI.sprite = Resources.Load<Sprite>($"Ciudadelas/Personajes/Caratulas/{sprite.name}");
-
-                    RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient };
-                    PhotonNetwork.RaiseEvent(PHASE_END, new string[] { GetComponent<GamePlayer>().character.name, PhotonNetwork.LocalPlayer.UserId }, raiseEventOptions, SendOptions.SendUnreliable);
-                    CleanOptionSelector();
-                    selectionPanel.SetActive(false);
-                });
-            }
-        }
-    }
-
-    //Clean optionSelector transform
-    public void CleanOptionSelector()
-    {
-        discarded.parent.gameObject.SetActive(false);
-        foreach (RectTransform child in optionSelector)
-            Destroy(child.gameObject);
-        foreach (RectTransform child in discarded)
-            Destroy(child.gameObject);
-    }
-
-    //Turn Logic Here
     public void StartTurn()
     {
         //ENABLE ALL TURN ACTIVE UI
@@ -111,20 +76,60 @@ public class GameLogic : MonoBehaviour
         turn = false;
     }
 
-    public void setTurn(bool turn)
-    {
-        this.turn = turn;
-    }
-
     public bool getTurn()
     {
         return turn;
     }
 
+    public void setTurn(bool turn)
+    {
+        this.turn = turn;
+    }
+
+    /// <summary>
+    /// Generates character selection buttons
+    /// </summary>
+    /// <param name="selected"></param>
+    public void showCharacterSelection(string[] selected)
+    {
+        selectionPanel.SetActive(true);
+        optionSelector.parent.parent.gameObject.GetComponentInChildren<Text>().text = "Selecciona personaje";
+        discarded.parent.gameObject.SetActive(true);
+        foreach (Sprite sprite in characters.Keys)
+        {
+            if (!selected.ToList().Contains(sprite.name)) //instantiate only available characters to select
+            {
+                GameObject g = GenerateCard(80, 115, true, sprite, false);
+                g.GetComponent<Button>().onClick.AddListener(() =>
+                {
+                    GetComponent<GamePlayer>().character = sprite; //Set as selected character for current round
+                    gameObject.AddComponent(Type.GetType(characters[sprite])); //Generate characters skill script
+
+                    characterUI.sprite = Resources.Load<Sprite>($"Ciudadelas/Personajes/Caratulas/{sprite.name}");
+
+                    RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient };
+                    PhotonNetwork.RaiseEvent(PHASE_END, new string[] { GetComponent<GamePlayer>().character.name, PhotonNetwork.LocalPlayer.UserId }, raiseEventOptions, SendOptions.SendUnreliable);
+                    CleanOptionSelector();
+                    selectionPanel.SetActive(false);
+                });
+            }
+        }
+    }
+
+    //Clean optionSelector transform
+    public void CleanOptionSelector()
+    {
+        discarded.parent.gameObject.SetActive(false);
+        foreach (RectTransform child in optionSelector)
+            Destroy(child.gameObject);
+        foreach (RectTransform child in discarded)
+            Destroy(child.gameObject);
+    }
+
     public void PerformSkill()
     {
         if (GetComponent<Character>().isPassive())
-            GetComponent<Character>().setSkill(optionSelector, selectionPanel, cardPrefab, characters.Keys.ToArray());
+            GetComponent<Character>().setSkill(characters.Keys.ToArray());
         else
         {
             skillButton.gameObject.SetActive(true);
@@ -132,7 +137,7 @@ public class GameLogic : MonoBehaviour
         }
     }
 
-    public GameObject GenerateCard(float width, float height, bool selectable, Sprite sprite, Transform parent)
+    public GameObject GenerateCard(float width, float height, bool selectable, Sprite sprite, bool discard)
     {
         GameObject g = Instantiate(cardPrefab);
         g.AddComponent<Card>();
@@ -143,22 +148,58 @@ public class GameLogic : MonoBehaviour
                 image.sprite = sprite;
                 image.preserveAspect = true;
             }
-        g.transform.SetParent(parent);
+        g.transform.SetParent(discard == true ? discarded : optionSelector);
         g.transform.localScale = new Vector3(1, 1, 1);
         return g;
     }
 
-    public void ShowHideSelectionPanel()
+    public GameObject GeneratePlayableCard(string[] data, bool returnable)
     {
-        selectionPanel.SetActive(!selectionPanel.activeInHierarchy);
-        if(selectionPanel.activeInHierarchy)
-            showHideButton.GetComponentInChildren<Text>().text = "Ocultar";
-        else
-            showHideButton.GetComponentInChildren<Text>().text = "Mostrar";
+        GameObject g = Instantiate(cardPrefab);
+        g.AddComponent<PlayableCard>();
+        g.GetComponent<PlayableCard>().SetCard(data, turn, hand, GetComponent<GamePlayer>());
+        g.transform.SetParent(hand);
+        g.transform.localScale = new Vector3(1, 1, 1);
+
+        if(returnable)
+        {
+            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient };
+            PhotonNetwork.RaiseEvent(RETURN_CARD, (string)data[1], raiseEventOptions, SendOptions.SendUnreliable);
+            CleanOptionSelector();
+            PerformSkill();
+        }
+
+        return g;
     }
 
     public Dictionary<Sprite, string> getCharacters()
     {
         return characters;
+    }
+
+    public void ClearCharacter()
+    {
+        if (TryGetComponent(out Character character))
+            Destroy(GetComponent<Character>());
+        characterUI.sprite = Resources.Load<Sprite>("Ciudadelas/Personajes/Caratulas/empty");
+    }
+
+    public void ShowHideSelectionPanel()
+    {
+        selectionPanel.SetActive(!selectionPanel.activeInHierarchy);
+        if (selectionPanel.activeInHierarchy)
+            showHideButton.GetComponentInChildren<Text>().text = "Ocultar";
+        else
+            showHideButton.GetComponentInChildren<Text>().text = "Mostrar";
+    }
+
+
+    //THIS METHOD NEEDS A REWORK
+    public void SetUI(string text)
+    {
+        selectionPanel.SetActive(true);
+        showHideButton.gameObject.SetActive(true);
+        showHideButton.GetComponentInChildren<Text>().text = "Ocultar";
+        optionSelector.parent.parent.gameObject.GetComponentInChildren<Text>().text = text;
     }
 }

@@ -19,7 +19,7 @@ public class Connection : MonoBehaviourPunCallbacks
 	{
         if (!string.IsNullOrEmpty(nameInputField.text))
         {
-			//Set new name to PlayerPrefs
+			//Save new name on PlayerPrefs
 			PlayerPrefs.SetString(PlayerPrefsNameKey, nameInputField.text);
 			//Connect to Game server
 			Debug.Log("Conectando..");

@@ -31,7 +31,6 @@ ScriptsOnlyBuild:
     - UnityEditor.U2D.Animation.BoneGizmo
     Unity.2D.IK.Editor.dll:
     - UnityEditor.U2D.IK.IKEditorManager
-    - UnityEditor.U2D.IK.IKGizmos
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridBrush
     - UnityEditor.Tilemaps.GridPaintingState
@@ -157,17 +156,17 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 6174}
     - Class: 114
-      Script: {instanceID: 6416}
+      Script: {instanceID: 6392}
     - Class: 114
-      Script: {instanceID: 7058}
+      Script: {instanceID: 6418}
     - Class: 114
-      Script: {instanceID: 7694}
+      Script: {instanceID: 7060}
     - Class: 114
-      Script: {instanceID: 8026}
+      Script: {instanceID: 7696}
     - Class: 114
-      Script: {instanceID: 8154}
+      Script: {instanceID: 8028}
     - Class: 114
-      Script: {instanceID: 26182}
+      Script: {instanceID: 8156}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -258,37 +257,37 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 6194}
     - Class: 114
-      Script: {instanceID: 6750}
+      Script: {instanceID: 6752}
     - Class: 114
-      Script: {instanceID: 6816}
+      Script: {instanceID: 6818}
     - Class: 114
-      Script: {instanceID: 7058}
+      Script: {instanceID: 7060}
     - Class: 114
-      Script: {instanceID: 7474}
+      Script: {instanceID: 7476}
     - Class: 114
-      Script: {instanceID: 7694}
+      Script: {instanceID: 7696}
     - Class: 114
-      Script: {instanceID: 7708}
+      Script: {instanceID: 7710}
     - Class: 114
-      Script: {instanceID: 7768}
+      Script: {instanceID: 7770}
     - Class: 114
-      Script: {instanceID: 7836}
+      Script: {instanceID: 7838}
     - Class: 114
-      Script: {instanceID: 8272}
+      Script: {instanceID: 8274}
     - Class: 114
-      Script: {instanceID: 8478}
+      Script: {instanceID: 8480}
     - Class: 114
-      Script: {instanceID: 9138}
+      Script: {instanceID: 9140}
     - Class: 114
-      Script: {instanceID: 9142}
+      Script: {instanceID: 9144}
     - Class: 114
-      Script: {instanceID: 9622}
+      Script: {instanceID: 9624}
     - Class: 114
-      Script: {instanceID: 9786}
+      Script: {instanceID: 9788}
     - Class: 114
-      Script: {instanceID: 10076}
+      Script: {instanceID: 10078}
     - Class: 114
-      Script: {instanceID: 10194}
+      Script: {instanceID: 10196}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -1402,6 +1401,12 @@ ScriptsOnlyBuild:
     className: GameMaster
   - hash:
       serializedVersion: 2
+      Hash: 015124acc9fb3d34ae2b81ac79b1f2bb
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: GameLogicNetworking
+  - hash:
+      serializedVersion: 2
       Hash: 2163458cae41cb1735c8b06fc34a9582
     assemblyName: PhotonUnityNetworking.Demos.dll
     namespaceName: Photon.Pun.Demo.Cockpit
@@ -2240,12 +2245,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core.dll
     namespaceName: Unity.VisualScripting
     className: UnityOnSliderValueChangedMessageListener
-  - hash:
-      serializedVersion: 2
-      Hash: 015124acc9fb3d34ae2b81ac79b1f2bb
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: GameLogicNetworking
   platform: 19
   scenePathNames:
   - Assets/Scenes/Lobby.unity

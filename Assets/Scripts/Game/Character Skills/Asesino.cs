@@ -21,28 +21,19 @@ public class Asesino : Character
     /// <summary>
     /// Load Skill
     /// </summary>
-    /// <param name="optionSelector">Content RectTransform where prefabs will be instantiated</param>
-    /// <param name="characterSelectPrefab">Character card prefab</param>
     /// <param name="sprites">Character Sprites</param>
-    override public void setSkill(RectTransform optionSelector, GameObject selectionPanel, GameObject characterSelectPrefab, Sprite[] sprites)
+    override public void setSkill(Sprite[] sprites)
     {
-        selectionPanel.SetActive(true);
-        optionSelector.parent.parent.gameObject.GetComponentInChildren<Text>().text = "Selecciona el personaje que quieres matar";
+        GetComponent<GameLogic>().SetUI("Selecciona el personaje que quieres matar");
         //Generate every character card excepting Assassin
         for (int i = 1; i < sprites.Length; i++)
         {
-            GameObject g = Instantiate(characterSelectPrefab);
-            g.AddComponent<Card>();
-            g.GetComponent<Card>().SetCard(60, 90, true);
-            foreach (Image image in g.GetComponentsInChildren<Image>())
-                if (image.gameObject.name == "Sprite") image.sprite = sprites[i];
-            g.transform.SetParent(optionSelector);
-            g.transform.localScale = new Vector3(1, 1, 1);
+            GameObject g = GetComponent<GameLogic>().GenerateCard(60, 90, true, sprites[i], false);
             g.GetComponent<Button>().onClick.AddListener(() =>
             {
                 //selected character will lose his turn
                 RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient };
-                foreach(Image image in g.GetComponentsInChildren<Image>())
+                foreach (Image image in g.GetComponentsInChildren<Image>())
                     if (image.gameObject.name == "Sprite")
                         PhotonNetwork.RaiseEvent(KILL, image.sprite.name, raiseEventOptions, SendOptions.SendUnreliable);
                 GetComponent<GameLogic>().CleanOptionSelector();

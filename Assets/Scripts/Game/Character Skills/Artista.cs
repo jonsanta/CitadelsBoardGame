@@ -12,7 +12,7 @@ public class Artista : Character
         return passive;
     }
 
-    public override void setSkill(RectTransform optionSelector, GameObject selectionPanel, GameObject characterSelectPrefab, Sprite[] sprites)
+    public override void setSkill(Sprite[] sprites)
     {
         throw new System.NotImplementedException();
     }
