@@ -25,7 +25,7 @@ public class Ladron : Character
     /// 
     override public void setSkill(Sprite[] sprites)
     {
-        GetComponent<GameLogic>().SetUI("Selecciona el personaje al que quieres robar");
+        GetComponent<GameLogic>().SetUI("Selecciona el personaje al que quieres robar", true);
         //Generate every character card excepting Assassin and Thief
         for (int i = 2; i < sprites.Length; i++)
         {

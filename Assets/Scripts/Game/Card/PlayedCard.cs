@@ -16,4 +16,7 @@ public class PlayedCard : MonoBehaviour
         points = int.Parse(data[2]);
         colour = data[3];
     }
+
+    //REQUIRES PLAYED CARD LOGIC AS ZOOM WHEN CARD IS POINTED, ..
+
 }

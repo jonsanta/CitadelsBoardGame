@@ -813,7 +813,7 @@ ScriptsOnlyBuild:
     className: Button
   - hash:
       serializedVersion: 2
-      Hash: 4700ce70040a6fdb10bb09a84a60cc00
+      Hash: 97edad5f7cfb24f2eaa32f2cca3ba62f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameLogic
@@ -1401,7 +1401,7 @@ ScriptsOnlyBuild:
     className: GameMaster
   - hash:
       serializedVersion: 2
-      Hash: 015124acc9fb3d34ae2b81ac79b1f2bb
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameLogicNetworking
@@ -1419,7 +1419,7 @@ ScriptsOnlyBuild:
     className: CountOfPlayersInRoomProperty
   - hash:
       serializedVersion: 2
-      Hash: 877ef49a6f382a7355e4f570727a1dc5
+      Hash: 04b21a673919003f31650e81507d180d
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GamePlayer
@@ -2145,7 +2145,7 @@ ScriptsOnlyBuild:
     className: ServerSettings
   - hash:
       serializedVersion: 2
-      Hash: fedb0cbabb9c1c396860038b614fd697
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayableCard

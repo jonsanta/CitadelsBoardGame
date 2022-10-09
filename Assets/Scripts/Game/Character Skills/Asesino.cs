@@ -24,7 +24,7 @@ public class Asesino : Character
     /// <param name="sprites">Character Sprites</param>
     override public void setSkill(Sprite[] sprites)
     {
-        GetComponent<GameLogic>().SetUI("Selecciona el personaje que quieres matar");
+        GetComponent<GameLogic>().SetUI("Selecciona el personaje que quieres matar", true);
         //Generate every character card excepting Assassin
         for (int i = 1; i < sprites.Length; i++)
         {

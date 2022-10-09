@@ -12,9 +12,6 @@ public class GameLogic : MonoBehaviour
 {
     //Photon Message constants
     private const byte PHASE_END = 3;
-    private const byte GIVE_TURN = 4;
-    private const byte GIVE_CARDS = 5;
-    private const byte RETURN_CARD = 11;
 
     //Prefabs
     [SerializeField] private GameObject cardPrefab; //card prefab
@@ -90,11 +87,9 @@ public class GameLogic : MonoBehaviour
     /// Generates character selection buttons
     /// </summary>
     /// <param name="selected"></param>
+    /// Contains unavailable characters
     public void showCharacterSelection(string[] selected)
     {
-        selectionPanel.SetActive(true);
-        optionSelector.parent.parent.gameObject.GetComponentInChildren<Text>().text = "Selecciona personaje";
-        discarded.parent.gameObject.SetActive(true);
         foreach (Sprite sprite in characters.Keys)
         {
             if (!selected.ToList().Contains(sprite.name)) //instantiate only available characters to select
@@ -137,6 +132,14 @@ public class GameLogic : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Generates UI card
+    /// </summary>
+    /// <param name="width"></param> card width size
+    /// <param name="height"></param> card height size
+    /// <param name="selectable"></param> clicable card?
+    /// <param name="sprite"></param> card sprite
+    /// <param name="discard"></param> true -> discarded RecTransform, false -> optionSelector RectTransform
     public GameObject GenerateCard(float width, float height, bool selectable, Sprite sprite, bool discard)
     {
         GameObject g = Instantiate(cardPrefab);
@@ -153,22 +156,17 @@ public class GameLogic : MonoBehaviour
         return g;
     }
 
-    public GameObject GeneratePlayableCard(string[] data, bool returnable)
+    /// <summary>
+    /// Generates Hand card
+    /// </summary>
+    /// <param name="data"></param> Contains data about the card (id, name, price, colour, sprite)
+    public GameObject GeneratePlayableCard(string[] data)
     {
         GameObject g = Instantiate(cardPrefab);
         g.AddComponent<PlayableCard>();
         g.GetComponent<PlayableCard>().SetCard(data, turn, hand, GetComponent<GamePlayer>());
         g.transform.SetParent(hand);
         g.transform.localScale = new Vector3(1, 1, 1);
-
-        if(returnable)
-        {
-            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient };
-            PhotonNetwork.RaiseEvent(RETURN_CARD, (string)data[1], raiseEventOptions, SendOptions.SendUnreliable);
-            CleanOptionSelector();
-            PerformSkill();
-        }
-
         return g;
     }
 
@@ -179,9 +177,9 @@ public class GameLogic : MonoBehaviour
 
     public void ClearCharacter()
     {
-        if (TryGetComponent(out Character character))
+        if (TryGetComponent(out Character character)) //Destroy character script if exists
             Destroy(GetComponent<Character>());
-        characterUI.sprite = Resources.Load<Sprite>("Ciudadelas/Personajes/Caratulas/empty");
+        characterUI.sprite = Resources.Load<Sprite>("Ciudadelas/Personajes/Caratulas/empty"); //Set empty character sprite
     }
 
     public void ShowHideSelectionPanel()
@@ -193,13 +191,21 @@ public class GameLogic : MonoBehaviour
             showHideButton.GetComponentInChildren<Text>().text = "Mostrar";
     }
 
-
-    //THIS METHOD NEEDS A REWORK
-    public void SetUI(string text)
+    /// <summary>
+    /// Enables Selection panel UI
+    /// </summary>
+    /// <param name="text"></param> selection panel text --> will be shown to player
+    /// <param name="hideOption"></param> //Panel can be hidden or not
+    public void SetUI(string text, bool hideOption)
     {
         selectionPanel.SetActive(true);
-        showHideButton.gameObject.SetActive(true);
-        showHideButton.GetComponentInChildren<Text>().text = "Ocultar";
         optionSelector.parent.parent.gameObject.GetComponentInChildren<Text>().text = text;
+
+        if (hideOption)
+        {
+            showHideButton.gameObject.SetActive(true);
+            showHideButton.GetComponentInChildren<Text>().text = "Ocultar";
+        }
+        else discarded.parent.gameObject.SetActive(true); //this line might need some rework
     }
 }
