@@ -34,7 +34,7 @@ public class PlayableCard : Card, IBeginDragHandler, IDragHandler, IEndDragHandl
     {
         //Increase dragged card size & removes its anchors
         transform.SetParent(hand.parent);
-        SetCardSize(width, height);
+        SetCardSize(100f, 150f);
 
         //Empty space that remembers the cards hand position
         emptySpace = new GameObject();
@@ -65,6 +65,7 @@ public class PlayableCard : Card, IBeginDragHandler, IDragHandler, IEndDragHandl
         Destroy(emptySpace);
         transform.SetParent(hand);
         transform.SetSiblingIndex(player.GetCardIndex(gameObject));
+        SetCardSize(100f, 150f);
 
         if (GetComponent<Button>().enabled && Input.mousePosition.y > Screen.height * 0.365f) //Play card
         {

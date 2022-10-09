@@ -22,3 +22,4 @@ QUE NO ESTÁ COMPLETADO:
     
   - Interfaz de usuario (no hay información del resto de usuarios, no hay un log de acciones, ..).
   - Retoques en la interfaz ya construida.
+  - Reconstruir la interfaz del Menu principal, Lobby, Lista de salas, ...
